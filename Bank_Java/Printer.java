@@ -1,5 +1,4 @@
 package Bank_Java;
-import java.util.*;
 
 public class Printer {
     public static final String TEXT_RESET = "\u001B[0m";

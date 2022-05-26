@@ -61,6 +61,7 @@ public class Account {
         }
         this.CurrentBalance -= rec;
         this.withdrawLimit = this.CurrentBalance - this.bank.minBalance();
+        Transactions.add(new Transaction(this, null, rec, this.getCurrentDateTime()));
         CheckBalance();
         return 1;
     }
@@ -99,12 +100,9 @@ public class Account {
             this.CurrentBalance -= amt;
             this.withdrawLimit = this.CurrentBalance - this.bank.minBalance();
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            LocalDateTime dt = LocalDateTime.now();
-            Transaction t = new Transaction(this,a,amt,dt.format(formatter));
-            Transactions.add(t);
-            a.Transactions.add(new Transaction(this, a, amt, dt.format(formatter)));
-            Printer.Print(t.toString(), Printer.TEXT_GREEN);
+            Transactions.add(new Transaction(this,a,amt,this.getCurrentDateTime()));
+            a.Transactions.add(new Transaction(this, a, amt, this.getCurrentDateTime()));
+            Printer.Print(Transactions.get(Transactions.size()-1).toString(), Printer.TEXT_GREEN);
             System.out.println("Success !");
         }else{
             System.out.println("Cannot exceed the withdrawl limit on your account !");
@@ -210,6 +208,12 @@ public class Account {
             System.out.println("Try again ! Chances left : "+(3-tries));
             VerifyAndViewOptins();
         }
+    }
+
+    public String getCurrentDateTime(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        LocalDateTime dt = LocalDateTime.now();
+        return dt.format(formatter);
     }
 
     @Override

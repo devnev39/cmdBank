@@ -1,6 +1,4 @@
 package Bank_Java;
-import java.io.*;
-import java.util.*;
 
 public class Transaction {
     private Account Sender;
@@ -17,7 +15,12 @@ public class Transaction {
 
     @Override
     public String toString() {
-        String str = "From : "+this.Sender.toString()+" To : "+this.Reciever.toString()+" Amt : "+this.Amount+" at "+this.DateTime;
+        String str = "";
+        if(this.Reciever==null){
+            str = "From : "+this.Sender.toString()+"| To : Withdrawal (SELF) "+"| Amt : "+this.Amount+"| At "+this.DateTime;
+        }else{
+            str = "From : "+this.Sender.toString()+"| To : "+this.Reciever.toString()+"| Amt : "+this.Amount+"| At "+this.DateTime;
+        }
         return str;
     }
 }
